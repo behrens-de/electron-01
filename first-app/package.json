@@ -1,0 +1,15 @@
+{
+  "name": "first-app",
+  "version": "0.0.1",
+  "description": "my first Electron App",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "Jan P. Behrens",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^16.0.3"
+  }
+}
