@@ -3,7 +3,7 @@ const { shell } = require('electron/common');
 // Erstellt neues Fenster
 function createWindow() {
     const win = new BrowserWindow({
-
+        icon: 'assets/icons/appicon.png',
         width: 800,
         height: 600,
         webPreferences: {
@@ -13,8 +13,12 @@ function createWindow() {
         }
     });
 
+    if (process.platform === 'darwin') {
+        app.dock.setIcon('assets/icons/appicon.png');
+    }
+
     // lädt die Datei die im renderprozess angezeit werden soll
-    win.loadFile(__dirname + '/index.html');
+    win.loadFile(__dirname + '/src/index.html');
 
     anwendungsmenu();
     contextmenu(win);
@@ -38,6 +42,11 @@ app.on('activate', () => {
     }
 });
 
+
+
+
+
+//-----
 
 const contextmenu = (win) => {
 
