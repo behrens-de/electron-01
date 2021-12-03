@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow, Menu, MenuItem } = require('electron');
 const { shell } = require('electron/common');
 // Erstellt neues Fenster
 function createWindow() {
@@ -17,7 +17,8 @@ function createWindow() {
     win.loadFile(__dirname + '/index.html');
 
     anwendungsmenu();
-    Demo.test();
+    contextmenu(win);
+
 
 }
 
@@ -38,6 +39,32 @@ app.on('activate', () => {
 });
 
 
+const contextmenu = (win) => {
+
+    const cmenu = new Menu();
+    cmenu.append(new MenuItem({
+        label: "Klick",
+        click() {
+            console.log("funktioniert");
+        }
+    }));
+    cmenu.append(new MenuItem(
+        { role: "selectAll", label: 'Alles auswählen' }
+    ));
+    // DEVTOOLS 
+    // cmenu.append(new MenuItem({
+    //     label: 'DEV Tools',
+    //     click: () => {
+    //         win.webContents.openDevTools();
+    //     }
+    // }));
+
+    // Rechtsklick Event
+    win.webContents.on('context-menu', function (e, params) {
+        // um das Menü an der mousposition erscheinen zu lassen
+        cmenu.popup(win, params.x, params.y);
+    });
+}
 
 
 // Anwendungsmenu
