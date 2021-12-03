@@ -1,7 +1,5 @@
 const { app, BrowserWindow, Menu } = require('electron');
 const { shell } = require('electron/common');
-
-
 // Erstellt neues Fenster
 function createWindow() {
     const win = new BrowserWindow({
@@ -18,32 +16,8 @@ function createWindow() {
     // lädt die Datei die im renderprozess angezeit werden soll
     win.loadFile(__dirname + '/index.html');
 
-    // Anwendungsmenu
-    const menuObjects = [
-        {
-            label: 'Menupunkt',
-            submenu: [
-                { label: "Unterpunkt 1", click:function(){
-                    console.log('YUHUU');
-                } },
-                { label: "Doku", click(){
-                    shell.openExternal('https://www.electronjs.org/docs/latest/');
-                } },
-                { label: "Unterpunkt 3" },
-                { type: "separator" },
-                { label: "ende", click(){
-                    app.quit();
-                } }
-            ]
-        }, {
-            label: 'Menupunkt 2',
-            submenu: [
-                {role: "selectAll", label: 'Alles auswählen'}
-            ]
-        }
-    ];
-    const menu = Menu.buildFromTemplate(menuObjects);
-    Menu.setApplicationMenu(menu);
+    anwendungsmenu();
+    Demo.test();
 
 }
 
@@ -62,3 +36,41 @@ app.on('activate', () => {
         createWindow();
     }
 });
+
+
+
+
+// Anwendungsmenu
+const anwendungsmenu = () => {
+    const menuObjects = [
+        {
+            label: 'Menupunkt',
+            submenu: [
+                {
+                    label: "Unterpunkt 1", click: function () {
+                        console.log('YUHUU');
+                    }
+                },
+                {
+                    label: "Doku", click() {
+                        shell.openExternal('https://www.electronjs.org/docs/latest/');
+                    }
+                },
+                { label: "Unterpunkt 3" },
+                { type: "separator" },
+                {
+                    label: "ende", click() {
+                        app.quit();
+                    }
+                }
+            ]
+        }, {
+            label: 'Menupunkt 2',
+            submenu: [
+                { role: "selectAll", label: 'Alles auswählen' }
+            ]
+        }
+    ];
+    const menu = Menu.buildFromTemplate(menuObjects);
+    Menu.setApplicationMenu(menu);
+}
