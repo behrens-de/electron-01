@@ -1,3 +1,4 @@
+require('@electron/remote/main').initialize();
 const { app, BrowserWindow, Menu, MenuItem } = require('electron');
 const { shell } = require('electron/common');
 // Erstellt neues Fenster
@@ -6,10 +7,12 @@ function createWindow() {
         icon: 'assets/icons/appicon.png',
         width: 800,
         height: 600,
+        titleBarOverlay: true,
         webPreferences: {
             // Das ermöglicht es die NODE.JS Module direkt im Frontend zu benutzen
             nodeIntegration: true,
-            contextIsolation: false
+            contextIsolation: false,
+            enableRemoteModule: true
         }
     });
 
@@ -23,6 +26,7 @@ function createWindow() {
     anwendungsmenu();
     contextmenu(win);
 
+ 
 
 }
 
@@ -42,7 +46,7 @@ app.on('activate', () => {
     }
 });
 
-
+app.setName("DEMO");
 
 
 
@@ -61,12 +65,12 @@ const contextmenu = (win) => {
         { role: "selectAll", label: 'Alles auswählen' }
     ));
     // DEVTOOLS 
-    // cmenu.append(new MenuItem({
-    //     label: 'DEV Tools',
-    //     click: () => {
-    //         win.webContents.openDevTools();
-    //     }
-    // }));
+    cmenu.append(new MenuItem({
+        label: 'DEV Tools',
+        click: () => {
+            win.webContents.openDevTools();
+        }
+    }));
 
     // Rechtsklick Event
     win.webContents.on('context-menu', function (e, params) {
@@ -110,3 +114,4 @@ const anwendungsmenu = () => {
     const menu = Menu.buildFromTemplate(menuObjects);
     Menu.setApplicationMenu(menu);
 }
+
